@@ -1,15 +1,13 @@
-package main;
-
-import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
-
-import constructor.Excel_reader;
-import factory.Affectation;
-import factory.Compagnon;
+import data.Affectation;
+import data.Compagnon;
+import data.Task;
+import factory.Affectations;
+import factory.Compagnons;
 import factory.Instance;
-import factory.Tache;
+import factory.Tasks;
+
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Run {
 
@@ -20,9 +18,9 @@ public class Run {
 			/***************************************************************/
 			/******************** CREATION INSTANCES ***********************/
 			/***************************************************************/
-			ArrayList<Compagnon> workers_list = Excel_reader.createCompagnonsList();
-			ArrayList<Tache> tasks_list = Excel_reader.createTasksList();
-			ArrayList<Affectation> previous_couples = Excel_reader.getAffectations();
+			ArrayList<Compagnon> workers_list = new Compagnons().initialize();
+			ArrayList<Task> tasks_list = new Tasks().initialize();
+			ArrayList<Affectation> previous_couples = new Affectations().initialize();
 			
 			Scanner sc = new Scanner(System.in);
 			//System.out.println("Entrez la date de l'interruption (en centim�mes d'heures) : ");

@@ -1,14 +1,13 @@
 package factory;
 
+import data.Affectation;
+import data.Compagnon;
+import data.Task;
+import org.apache.poi.ss.usermodel.*;
+
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 public class Instance {
 
@@ -24,7 +23,7 @@ public class Instance {
 	ArrayList<String> A; 						//Liste des zones
 	HashMap<String, Integer> machines, workers; //Maps du nombre de travailleurs/machines par profession/type
 	
-	ArrayList<Tache> tasks_list;
+	ArrayList<Task> tasks_list;
 	ArrayList<Compagnon> workers_list;
 	
 	//Data for rescheduling
@@ -35,12 +34,12 @@ public class Instance {
 	int[][] old_aff;							//Previous affectations for each task
 	
 	/**
-	 * On se sert des paramètres pour initialiser les informations manquantes
+	 * On se sert des paramï¿½tres pour initialiser les informations manquantes
 	 * @param workers_list
 	 * @param tasks_list
 	 * @param previous_couples
 	 */
-	public Instance(ArrayList<Compagnon> workers_list, ArrayList<Tache> tasks_list,
+	public Instance(ArrayList<Compagnon> workers_list, ArrayList<Task> tasks_list,
 			ArrayList<Affectation> previous_couples, int actual_date) {
 		
 		this.workers_list = workers_list;
@@ -49,7 +48,7 @@ public class Instance {
 		this.actual_date = actual_date;
 
 		try {
-			//NbAreas peut être initialisé sans eux dans u npremier temps
+			//NbAreas peut ï¿½tre initialisï¿½ sans eux dans u npremier temps
 			FileInputStream file = new FileInputStream("files/Autres.xlsx");
 			Workbook workbook = WorkbookFactory.create(file);
 			Sheet sheet = workbook.getSheet("zones");
@@ -101,7 +100,7 @@ public class Instance {
 			height = sheet.getLastRowNum();
 			for(int i = 0; i < height; i++) {
 				line = sheet.getRow(i+1);
-				//On récupère les IDs du compagnon et e la tâche
+				//On rï¿½cupï¿½re les IDs du compagnon et e la tï¿½che
 				int c_id = (int) line.getCell(0).getNumericCellValue();
 				String t_id;
 				if(line.getCell(1).getCellType() == CellType.NUMERIC)
@@ -113,28 +112,28 @@ public class Instance {
 				//On cherhcer leurs positions dans leur liste respective
 				int comp_pos = -1, tas_pos = -1;
 				for(int t = 0; t < tasks_list.size(); t++) 
-					if(tasks_list.get(t).getID().equals(t_id))
+					if(tasks_list.get(t).getId().equals(t_id))
 						tas_pos = t;
 				
 				for(int c = 0; c < workers_list.size(); c++)
-					if(workers_list.get(c).getID() == c_id)
+					if(workers_list.get(c).getId() == c_id)
 						comp_pos = c;
 				
 				old_aff[tas_pos][comp_pos] = 1;
 
 			}
 			
-			//On fini par définir la liste des tâches à réaffecter
-			//TODO Old_school version, à modifier pour coller aux différentes règles
-			//TODO Idea : mettre une pop up qui dit 'voici ce qui a été selectionné, c'est bon?
+			//On fini par dï¿½finir la liste des tï¿½ches ï¿½ rï¿½affecter
+			//TODO Old_school version, ï¿½ modifier pour coller aux diffï¿½rentes rï¿½gles
+			//TODO Idea : mettre une pop up qui dit 'voici ce qui a ï¿½tï¿½ selectionnï¿½, c'est bon?
 			to_reschedule = new ArrayList<String>();
 			for(Affectation aff : previous_couples)
 				if(aff.getStart() >= actual_date)
-					to_reschedule.add(aff.getT_id());
+					to_reschedule.add(aff.getTaskId());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Erreur dans la création de l'instance");
+			System.out.println("Erreur dans la crï¿½ation de l'instance");
 		}
 	}
 
@@ -170,11 +169,11 @@ public class Instance {
 		this.workers = workers;
 	}
 
-	public ArrayList<Tache> getTasks_list() {
+	public ArrayList<Task> getTasks_list() {
 		return tasks_list;
 	}
 
-	public void setTasks_list(ArrayList<Tache> tasks_list) {
+	public void setTasks_list(ArrayList<Task> tasks_list) {
 		this.tasks_list = tasks_list;
 	}
 
