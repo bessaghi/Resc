@@ -3,7 +3,6 @@ package factory;
 import data.Task;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,7 +12,7 @@ public class TasksTest {
     @Test
     public void should_read_tasks_file() {
 
-        ArrayList<Task> tasks = new Tasks().initialize();
+        Tasks tasks = new Tasks().initialize();
 
         Task task = Task.newTask()
                 .processingTime(270)
@@ -30,7 +29,7 @@ public class TasksTest {
                 "E32DB"));
         task.setSuccessors(Arrays.asList("139", "121", "119", "105"));
 
-        assertThat(tasks.get(3)).isEqualToComparingFieldByField(task);
+        assertThat(tasks.getTaskById("102")).isEqualToComparingFieldByField(task);
     }
 
 }

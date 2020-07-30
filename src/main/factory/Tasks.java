@@ -22,7 +22,19 @@ public class Tasks {
         this.tasks = new ArrayList<>();
     }
 
-    public ArrayList<Task> initialize() {
+    public Integer getTaskById(String taskId) {
+        return this.tasks.stream()
+                .filter(task -> task.getId().equals(taskId))
+                .findFirst()
+                .map(task -> tasks.indexOf(task))
+                .orElse(-1);
+    }
+
+    public int size() {
+        return this.tasks.size();
+    }
+
+    public Tasks initialize() {
 
         readFile(TACHES_FILE_PATH).ifPresent(workbook -> {
             Sheet sheetList = workbook.getSheet("liste");
@@ -80,7 +92,7 @@ public class Tasks {
             }
         });
 
-        return tasks;
+        return this;
     }
 
     private Zones retrieveTasks(Workbook workbook, String sheetName) {

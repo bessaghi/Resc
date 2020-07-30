@@ -18,18 +18,26 @@ public class Compagnons {
         this.compagnons = new ArrayList<>();
     }
 
-    public ArrayList<Compagnon> initialize() {
+
+    public Integer getCompagnonPositionById(int compagnonId) {
+        return this.compagnons.stream()
+                .filter(compagnon -> compagnon.getId() == compagnonId)
+                .findFirst()
+                .map(compagnon -> compagnons.indexOf(compagnon))
+                .orElse(-1);
+    }
+
+    public Compagnons initialize() {
         readFile(COMPAGNONS_FILE_PATH).ifPresent(workbook -> {
             Sheet sheetTypeH = workbook.getSheet("type h");
             Sheet sheetMetier = workbook.getSheet("metier");
             Sheet sheetEquipe = workbook.getSheet("equipe");
 
-            int nb_of_compagnons = sheetTypeH.getLastRowNum();
             Row lineH;
             Row lineM;
             Row lineE;
 
-            for (int i = 1; i <= nb_of_compagnons; i++) {
+            for (int i = 1; i <= sheetTypeH.getLastRowNum(); i++) {
                 lineH = sheetTypeH.getRow(i);
                 lineM = sheetMetier.getRow(i);
                 lineE = sheetEquipe.getRow(i);
@@ -42,7 +50,10 @@ public class Compagnons {
             }
         });
 
-        return this.compagnons;
+        return this;
+    }
 
+    public int size() {
+        return this.compagnons.size();
     }
 }

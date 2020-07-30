@@ -4,8 +4,6 @@ package factory;
 import data.Compagnon;
 import org.junit.Test;
 
-import java.util.ArrayList;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CompagnonsTest {
@@ -13,7 +11,7 @@ public class CompagnonsTest {
     @Test
     public void should_read_compagnons_file() {
 
-        ArrayList<Compagnon> compagnons = new Compagnons().initialize();
+        Compagnons compagnons = new Compagnons().initialize();
 
         Compagnon compagnon = Compagnon.newCompagnon()
                 .id(6)
@@ -22,7 +20,7 @@ public class CompagnonsTest {
                 .equipe("EQUIPE STD1")
                 .build();
 
-        assertThat(compagnons.get(5)).isEqualToComparingFieldByField(compagnon);
+        assertThat(compagnons.getCompagnonPositionById(6)).isEqualToComparingFieldByField(compagnon);
     }
 
 

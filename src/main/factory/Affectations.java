@@ -5,6 +5,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static utils.ExcelReader.*;
 
@@ -17,7 +19,7 @@ public class Affectations {
         this.affectations = new ArrayList<>();
     }
 
-    public ArrayList<Affectation> initialize() {
+    public Affectations initialize() {
         readFile(TACHES_FILE_PATH).ifPresent(workbook -> {
             Sheet sheet = workbook.getSheet("liste");
 
@@ -27,15 +29,28 @@ public class Affectations {
             for (int t = 1; t <= numberOfTasks; t++) {
                 line = sheet.getRow(t);
                 affectations.add(
-                        Affectation.newAffectation()
-                                .taskId(convertNumericCellToString(line, 0))
-                                .compagnonId(0)
-                                .start(readNumericCell(line, 11))
-                                .end(readNumericCell(line, 12))
-                                .build());
+                        new Affectation()
+                                .setTaskId(convertNumericCellToString(line, 0))
+                                .setCompagnonId(0)
+                                .setStart(readNumericCell(line, 11))
+                                .setEnd(readNumericCell(line, 12))
+                );
             }
         });
-        return affectations;
+        return this;
 
+    }
+
+    public List<String> tasksToReschedule(int actualStartDateForRescheduling) {
+        return affectations.stream()
+                .filter(affectation -> affectation.getStart() >= actualStartDateForRescheduling)
+                .map(Affectation::getTaskId)
+                .collect(Collectors.toList());
+    }
+
+    public List<Integer> previousEndingTime() {
+        return affectations.stream()
+                .map(Affectation::getEnd)
+                .collect(Collectors.toList());
     }
 }
