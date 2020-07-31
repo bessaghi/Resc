@@ -7,6 +7,9 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.assertj.core.util.Lists;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.*;
 
 import static utils.ExcelReader.*;
@@ -17,9 +20,22 @@ public class Tasks {
     private static final String AUTRES_FILE_PATH = "files/Autres.xlsx";
 
     private ArrayList<Task> tasks;
+    private PrintStream out;
+    private int numberOfLines;
 
     public Tasks() {
         this.tasks = new ArrayList<>();
+        this.out = createFile();
+        this.numberOfLines = 0;
+    }
+
+    private PrintStream createFile() {
+        try {
+            return new PrintStream(new FileOutputStream("files/result.txt"));
+        } catch (FileNotFoundException e) {
+            System.err.println("Could not create output file");
+            return null;
+        }
     }
 
     public Integer getTaskPositionById(String taskId) {
@@ -28,28 +44,23 @@ public class Tasks {
                 .orElse(-1);
     }
 
-    public StringBuilder allTasksFollowing(String taskId) {
-        StringBuilder stringBuilder = new StringBuilder();
-        printTaskAndSuccessors(taskId, stringBuilder);
+    public void printAllTasksFollowing(String taskId) {
+        printTaskAndSuccessors(taskId);
 
         List<String> successors = getTaskById(taskId)
                 .map(Task::getSuccessors)
                 .orElse(Lists.emptyList());
         for (String successorTaskId : successors) {
-            printTaskAndSuccessors(successorTaskId, stringBuilder);
-            StringBuilder s = allTasksFollowing(successorTaskId);
-            System.out.println(s.toString());
-            stringBuilder.append(s);
+            if (numberOfLines == 99) {
+                return;
+            }
+            printAllTasksFollowing(successorTaskId);
         }
-        return stringBuilder;
     }
 
-    private StringBuilder printTaskAndSuccessors(String taskId, StringBuilder stringBuilder) {
-        System.out.println(taskId + " -> " + printSuccessor(taskId) + " \n");
-        return stringBuilder.append(taskId)
-                .append(" -> ")
-                .append(printSuccessor(taskId))
-                .append("\n");
+    private void printTaskAndSuccessors(String taskId) {
+        out.println(taskId + " -> " + printSuccessor(taskId) + " \n");
+        numberOfLines++;
     }
 
     private String printSuccessor(String taskId) {
@@ -57,7 +68,7 @@ public class Tasks {
                 .map(task -> task.getSuccessors())
                 .filter(Objects::nonNull)
                 .map(Object::toString)
-                .orElse("END");
+                .orElse("");
     }
 
     public Optional<Task> getTaskById(String taskId) {

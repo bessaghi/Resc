@@ -23,6 +23,10 @@ public class Run {
 			Instance Dassault = new Instance(workers, tasks, previousCouples, 4000/*sc.nextInt()*/);
 			sc.close();
 
+			tasks.printAllTasksFollowing("102");
+			System.out.println("Done");
+
+
 			/***************************************************************/
 			/******************* DETERMINATION REPLAN **********************/
 			/***************************************************************/

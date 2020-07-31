@@ -31,12 +31,4 @@ public class TasksTest {
         assertThat(tasks.getTaskById("102").get()).isEqualToComparingFieldByField(task);
     }
 
-    @Test
-    public void should_retrieve_successors() {
-
-        Tasks tasks = new Tasks().initialize();;
-
-        assertThat(tasks.allTasksFollowing("102").toString()).isEqualTo("");
-
-    }
 }
