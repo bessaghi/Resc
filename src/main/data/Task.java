@@ -63,4 +63,7 @@ public class Task {
 		return id;
 	}
 
+	public List<String> getSuccessors() {
+		return successors;
+	}
 }

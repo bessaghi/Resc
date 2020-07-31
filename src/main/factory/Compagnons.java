@@ -5,6 +5,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static utils.ExcelReader.*;
 
@@ -20,11 +21,15 @@ public class Compagnons {
 
 
     public Integer getCompagnonPositionById(int compagnonId) {
-        return this.compagnons.stream()
-                .filter(compagnon -> compagnon.getId() == compagnonId)
-                .findFirst()
+        return getCompagnon(compagnonId)
                 .map(compagnon -> compagnons.indexOf(compagnon))
                 .orElse(-1);
+    }
+
+    public Optional<Compagnon> getCompagnon(int compagnonId) {
+        return this.compagnons.stream()
+                .filter(compagnon -> compagnon.getId() == compagnonId)
+                .findFirst();
     }
 
     public Compagnons initialize() {

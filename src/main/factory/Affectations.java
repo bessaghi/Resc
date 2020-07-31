@@ -6,6 +6,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static utils.ExcelReader.*;
@@ -17,6 +18,12 @@ public class Affectations {
 
     public Affectations() {
         this.affectations = new ArrayList<>();
+    }
+
+    public Optional<Affectation> getAffectationById(String taskId) {
+        return affectations.stream()
+                .filter(affectation -> taskId.equals(affectation.getTaskId()))
+                .findFirst();
     }
 
     public Affectations initialize() {

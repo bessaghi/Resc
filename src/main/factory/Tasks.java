@@ -5,9 +5,9 @@ import data.Zones;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.assertj.core.util.Lists;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 import static utils.ExcelReader.*;
 
@@ -22,12 +22,48 @@ public class Tasks {
         this.tasks = new ArrayList<>();
     }
 
-    public Integer getTaskById(String taskId) {
-        return this.tasks.stream()
-                .filter(task -> task.getId().equals(taskId))
-                .findFirst()
+    public Integer getTaskPositionById(String taskId) {
+        return getTaskById(taskId)
                 .map(task -> tasks.indexOf(task))
                 .orElse(-1);
+    }
+
+    public StringBuilder allTasksFollowing(String taskId) {
+        StringBuilder stringBuilder = new StringBuilder();
+        printTaskAndSuccessors(taskId, stringBuilder);
+
+        List<String> successors = getTaskById(taskId)
+                .map(Task::getSuccessors)
+                .orElse(Lists.emptyList());
+        for (String successorTaskId : successors) {
+            printTaskAndSuccessors(successorTaskId, stringBuilder);
+            StringBuilder s = allTasksFollowing(successorTaskId);
+            System.out.println(s.toString());
+            stringBuilder.append(s);
+        }
+        return stringBuilder;
+    }
+
+    private StringBuilder printTaskAndSuccessors(String taskId, StringBuilder stringBuilder) {
+        System.out.println(taskId + " -> " + printSuccessor(taskId) + " \n");
+        return stringBuilder.append(taskId)
+                .append(" -> ")
+                .append(printSuccessor(taskId))
+                .append("\n");
+    }
+
+    private String printSuccessor(String taskId) {
+        return getTaskById(taskId)
+                .map(task -> task.getSuccessors())
+                .filter(Objects::nonNull)
+                .map(Object::toString)
+                .orElse("END");
+    }
+
+    public Optional<Task> getTaskById(String taskId) {
+        return this.tasks.stream()
+                .filter(task -> task.getId().equals(taskId))
+                .findFirst();
     }
 
     public int size() {

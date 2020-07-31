@@ -1,6 +1,7 @@
 package factory;
 
 import data.Affectation;
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 public class AffectationsTest {
@@ -15,6 +16,6 @@ public class AffectationsTest {
                 .setStart(5671)
                 .setEnd(5784);
 
-       // Assertions.assertThat(affectations.(10)).isEqualToComparingFieldByField(affectation);
+        Assertions.assertThat(affectations.getAffectationById("109").get()).isEqualToComparingFieldByField(affectation);
     }
 }

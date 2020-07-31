@@ -28,7 +28,15 @@ public class TasksTest {
                         "E32DB"))
                 .setSuccessors(Arrays.asList("139", "121", "119", "105"));
 
-        assertThat(tasks.getTaskById("102")).isEqualToComparingFieldByField(task);
+        assertThat(tasks.getTaskById("102").get()).isEqualToComparingFieldByField(task);
     }
 
+    @Test
+    public void should_retrieve_successors() {
+
+        Tasks tasks = new Tasks().initialize();;
+
+        assertThat(tasks.allTasksFollowing("102").toString()).isEqualTo("");
+
+    }
 }

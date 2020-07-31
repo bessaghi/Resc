@@ -77,7 +77,7 @@ public class Instance {
 						int compagnonId = readNumericCell(line, 0);
 						String taskId = convertNumericCellToString(line, 1);
 
-						int taskPosition = tasks.getTaskById(taskId);
+						int taskPosition = tasks.getTaskPositionById(taskId);
 						int compagnionPosition = compagnons.getCompagnonPositionById(compagnonId);
 
 						if (taskPosition > -1 && compagnionPosition > -1) {

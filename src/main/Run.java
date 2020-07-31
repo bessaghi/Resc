@@ -22,7 +22,7 @@ public class Run {
 			//System.out.println("Entrez la date de l'interruption (en centim�mes d'heures) : ");
 			Instance Dassault = new Instance(workers, tasks, previousCouples, 4000/*sc.nextInt()*/);
 			sc.close();
-			
+
 			/***************************************************************/
 			/******************* DETERMINATION REPLAN **********************/
 			/***************************************************************/

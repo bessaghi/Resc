@@ -19,7 +19,7 @@ public class CompagnonsTest {
                 .setProfession("Assemblage")
                 .setEquipe("EQUIPE STD1");
 
-        assertThat(compagnons.getCompagnonPositionById(6)).isEqualToComparingFieldByField(compagnon);
+        assertThat(compagnons.getCompagnon(6).get()).isEqualToComparingFieldByField(compagnon);
     }
 
 
