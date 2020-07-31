@@ -1,29 +1,11 @@
 package data;
 
 public class Affectation {
-
-	/**
-	 * Represents the couple compagnon/task and 
-	 * at which time unit the task has been started
-	 * by this specific compagnon
-	 */
 	
 	private int compagnonId;
+	private String taskId;
 	private int start;
 	private int end;
-	private String taskId;
-
-	public int getEnd() {
-		return end;
-	}
-
-	public String getTaskId() {
-		return taskId;
-	}
-
-	public int getStart() {
-		return start;
-	}
 
 	public Affectation setCompagnonId(int compagnonId) {
 		this.compagnonId = compagnonId;
@@ -44,4 +26,17 @@ public class Affectation {
 		this.taskId = taskId;
 		return this;
 	}
+
+	public int getEnd() {
+		return end;
+	}
+
+	public String getTaskId() {
+		return taskId;
+	}
+
+	public int getStart() {
+		return start;
+	}
+
 }

@@ -14,20 +14,19 @@ public class TasksTest {
 
         Tasks tasks = new Tasks().initialize();
 
-        Task task = Task.newTask()
-                .processingTime(270)
-                .numberOfCompagnons(1)
-                .id("102")
-                .regroupement("")
-                .professionNeeded("Assemblage")
-                .build();
-        task.setAreaUsed(Arrays.asList("E27DB",
-                "E28DB",
-                "E29DB",
-                "E30DB",
-                "E31DB",
-                "E32DB"));
-        task.setSuccessors(Arrays.asList("139", "121", "119", "105"));
+        Task task = new Task()
+                .setProcessingTime(270)
+                .setNumberOfCompagnons(1)
+                .setId("102")
+                .setRegroupement("")
+                .setProfessionNeeded("Assemblage")
+                .setAreaUsed(Arrays.asList("E27DB",
+                        "E28DB",
+                        "E29DB",
+                        "E30DB",
+                        "E31DB",
+                        "E32DB"))
+                .setSuccessors(Arrays.asList("139", "121", "119", "105"));
 
         assertThat(tasks.getTaskById("102")).isEqualToComparingFieldByField(task);
     }

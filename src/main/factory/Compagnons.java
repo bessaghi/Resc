@@ -42,14 +42,12 @@ public class Compagnons {
                 lineM = sheetMetier.getRow(i);
                 lineE = sheetEquipe.getRow(i);
 
-                compagnons.add(Compagnon.newCompagnon().id(i)
-                        .typeH(readNumericCell(lineH, 1))
-                        .profession(readStringCell(lineM, 1))
-                        .equipe(readStringCell(lineE, 1))
-                        .build());
+                compagnons.add(new Compagnon().setId(i)
+                        .setTypeH(readNumericCell(lineH, 1))
+                        .setProfession(readStringCell(lineM, 1))
+                        .setEquipe(readStringCell(lineE, 1)));
             }
         });
-
         return this;
     }
 

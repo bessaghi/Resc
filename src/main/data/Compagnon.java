@@ -10,54 +10,27 @@ public class Compagnon {
 	private String profession;
 	private String equipe;
 
-	private Compagnon(Builder builder) {
-		this.id = builder.id;
-		this.typeH = builder.typeH;
-		this.profession = builder.profession;
-		this.equipe = builder.equipe;
+	public Compagnon setId(int id) {
+		this.id = id;
+		return this;
 	}
 
-	public static Builder newCompagnon() {
-		return new Builder();
+	public Compagnon setTypeH(int typeH) {
+		this.typeH = typeH;
+		return this;
+	}
+
+	public Compagnon setProfession(String profession) {
+		this.profession = profession;
+		return this;
+	}
+
+	public Compagnon setEquipe(String equipe) {
+		this.equipe = equipe;
+		return this;
 	}
 
 	public int getId() {
-		return this.id;
+		return id;
 	}
-
-
-	public static final class Builder {
-		private int id;
-		private int typeH;
-		private String profession;
-		private String equipe;
-
-		private Builder() {
-		}
-
-		public Compagnon build() {
-			return new Compagnon(this);
-		}
-
-		public Builder id(int id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder typeH(int typeH) {
-			this.typeH = typeH;
-			return this;
-		}
-
-		public Builder profession(String profession) {
-			this.profession = profession;
-			return this;
-		}
-
-		public Builder equipe(String equipe) {
-			this.equipe = equipe;
-			return this;
-		}
-	}
-
 }

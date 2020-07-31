@@ -13,12 +13,11 @@ public class CompagnonsTest {
 
         Compagnons compagnons = new Compagnons().initialize();
 
-        Compagnon compagnon = Compagnon.newCompagnon()
-                .id(6)
-                .typeH(2)
-                .profession("Assemblage")
-                .equipe("EQUIPE STD1")
-                .build();
+        Compagnon compagnon = new Compagnon()
+                .setId(6)
+                .setTypeH(2)
+                .setProfession("Assemblage")
+                .setEquipe("EQUIPE STD1");
 
         assertThat(compagnons.getCompagnonPositionById(6)).isEqualToComparingFieldByField(compagnon);
     }

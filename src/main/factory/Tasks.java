@@ -46,13 +46,12 @@ public class Tasks {
             for (int i = 1; i <= numberOfTasks; i++) {
                 line = sheetList.getRow(i);
 
-                tasks.add(Task.newTask()
-                        .processingTime(readNumericCell(line, 2))
-                        .numberOfCompagnons(readNumericCell(line, 3))
-                        .id(convertNumericCellToString(line, 0))
-                        .regroupement(readStringCell(line, 7))
-                        .professionNeeded(readStringCell(line, 5))
-                        .build());
+                tasks.add(new Task()
+                        .setProcessingTime(readNumericCell(line, 2))
+                        .setNumberOfCompagnons(readNumericCell(line, 3))
+                        .setId(convertNumericCellToString(line, 0))
+                        .setRegroupement(readStringCell(line, 7))
+                        .setProfessionNeeded(readStringCell(line, 5)));
             }
 
             HashMap<String, String> taskByMachine = new HashMap<>();
