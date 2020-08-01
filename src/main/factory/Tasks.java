@@ -59,8 +59,11 @@ public class Tasks {
     }
 
     private void printTaskAndSuccessors(String taskId) {
-        out.println(taskId + " -> " + printSuccessor(taskId) + " \n");
-        numberOfLines++;
+        String successor = printSuccessor(taskId);
+        if (!"".equals(successor)) {
+            out.println(taskId + " -> " + successor);
+            numberOfLines++;
+        }
     }
 
     private String printSuccessor(String taskId) {
