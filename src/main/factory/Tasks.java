@@ -51,7 +51,7 @@ public class Tasks {
                 .map(Task::getSuccessors)
                 .orElse(Lists.emptyList());
         for (String successorTaskId : successors) {
-            if (numberOfLines == 99) {
+            if (numberOfLines == 100) {
                 return;
             }
             printAllTasksFollowing(successorTaskId);
